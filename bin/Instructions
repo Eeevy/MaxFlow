@@ -21,7 +21,7 @@ Finns det matchningar?
 Spara den som är det minsta flowet.
 Exempel: Flödet är 1. 1-1=0. Kopplingen försvinner!
 
-Djupet-först med en kö är bättre för om man tar Bredden-först blir det som en stack istället.
+Djupet-först med en stack är bättre för om man tar Bredden-först blir det som en kö istället.
 
 Alla noder sätts till false från början eftersom de inte är besökta än!
 
