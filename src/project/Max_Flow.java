@@ -1,6 +1,15 @@
 package project;
 
 import java.util.ArrayList;
+/**
+ * Initiera en graf med storleken som användaren matar in
+ * createGraph(int leftSize, int rightSize )
+ * addConnection(int left, int right)
+ * 
+ * Se till att det finns connection between source nodes and sink nodes
+ * kommentera noggrant för att visa att du förstår
+ * 
+ */
 import java.util.LinkedList;
 
 public class Max_Flow {
@@ -57,8 +66,8 @@ public class Max_Flow {
 				graph[u][v] -= flowCapacity;
 				graph[v][u] += flowCapacity;
 				if (graph[v][u] > 0) {
-					if (v < 5 && u > 0) {
-						System.out.print("Mellan nod:" + u + "och " + v);
+					if (v < sink && u > source) {
+						System.out.print("Mellan nod: " + u + "och " + v);
 						System.out.println();
 					}
 				}
