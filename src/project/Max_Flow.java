@@ -128,7 +128,24 @@ public class Max_Flow {
 	public void createGraph(int leftSize, int rightSize) {
 		this.graph = new int[leftSize][rightSize];
 		
+		for(int i = 0; i < graph.length/2;i++){
+			for(int j = 0; j < graph[i].length/2;j++){
+				if(i > 0){
+					graph[i][j] = 1;
+				}else if(i == graph.length -1){
+					graph[i][j] = 1;
+				}else{
+				graph[i][j] = 0;
+				}
+				
+			}
+		}
+		
 
+	}
+	
+	public int[][] getGraph(){
+		return this.graph;
 	}
 
 	/**
@@ -139,18 +156,7 @@ public class Max_Flow {
 	 * @param right
 	 */
 	public void addConnection(int left, int right) {
-		for(int i = 0; i < graph.length;i++){
-			for(int j = 0; j < graph[i].length;j++){
-				if(i == 0){
-					graph[i][j] = 1;
-				}else if(i == graph.length -1){
-					graph[i][j] = 1;
-				}else{
-				graph[i][j] = 0;
-				}
-				
-			}
-		}
+		
 
 	}
 	/**
@@ -162,7 +168,7 @@ public class Max_Flow {
 	   {
 	      for(int j = 0; j < graph[i].length; j++)
 	      {
-	         System.out.printf("%5d ", graph[i][j]);
+	         System.out.printf("%4d ", graph[i][j]);
 	      }
 	      System.out.println();
 	   }
@@ -184,6 +190,8 @@ public class Max_Flow {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+			Max_Flow run = new Max_Flow();
+
 			System.out.println("Set the size of the graph...");
 			System.out.println("Left side: ");
 			int leftSize = getInput();
@@ -191,11 +199,14 @@ public class Max_Flow {
 			int rightSize = getInput();
 			System.out.println("The size of the graph is " + leftSize + " x " + rightSize + ".");
 			
-//			createGraph(leftSize, rightSize);
+			run.createGraph(leftSize, rightSize);
+			run.printGrid(run.getGraph());
 			
 			
 		int[][] graf = { { 0, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 },
 				{ 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 } };
+		System.out.println();
+		run.printGrid(graf);
 
 		// int[][] graf = {
 		// {0,16,13,0,0,0},
@@ -206,7 +217,6 @@ public class Max_Flow {
 		// {0,0,0,0,0,0}
 		// };
 
-		Max_Flow run = new Max_Flow();
 		System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graf, 0, 5));
 	}
 }
