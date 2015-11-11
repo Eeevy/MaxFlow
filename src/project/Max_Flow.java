@@ -156,6 +156,6 @@ public class Max_Flow {
 		// };
 
 		Max_Flow run = new Max_Flow();
-		System.out.println("MaxFlow för din graf är: " + run.fordFulkersonAlgorithm(graf, 0, 5));
+		System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graf, 0, 5));
 	}
 }
