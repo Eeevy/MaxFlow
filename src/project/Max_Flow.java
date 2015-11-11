@@ -1,6 +1,7 @@
 package project;
 
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /*
  * TODO 1: Initiera en graf med storleken som användaren matar in. Den ska heta createGraph(int leftSize, int rightSize).
@@ -30,6 +31,7 @@ public class Max_Flow {
 	private int[] path = new int[6]; // Väg.
 	private boolean[] visited = new boolean[6]; // Boolean som beskriver om en
 												// nod är besökt eller inte.
+	static Scanner scanner = new Scanner(System.in);
 
 	/**
 	 * Metod som utgår från principen Bredden-Först.
@@ -136,6 +138,16 @@ public class Max_Flow {
 	public void addConnection(int left, int right) {
 
 	}
+	
+	/**
+	 * Läser in och returnerar användarens inmatning.
+	 * 
+	 * @return input
+	 */
+	private static int getInput() {
+		int input = scanner.nextInt();
+		return input;
+	}
 
 	/**
 	 * Metod för att testköra programmet. Initierar grafen med 1:or och 0:or.
@@ -143,6 +155,16 @@ public class Max_Flow {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+			System.out.println("Set the size of the graph...");
+			System.out.println("Left side: ");
+			int leftSize = getInput();
+			System.out.println("Right side: ");
+			int rightSize = getInput();
+			System.out.println("The size of the graph is " + leftSize + " x " + rightSize + ".");
+			
+//			createGraph(leftSize, rightSize);
+			
+			
 		int[][] graf = { { 0, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 },
 				{ 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 } };
 
