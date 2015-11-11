@@ -30,6 +30,7 @@ public class Max_Flow {
 	private int[] path = new int[6]; // Väg.
 	private boolean[] visited = new boolean[6]; // Boolean som beskriver om en
 												// nod är besökt eller inte.
+	private int[][] graph;//Tilldelas storlek och värden av användarinput
 
 	/**
 	 * Metod som utgår från principen Bredden-Först.
@@ -117,13 +118,36 @@ public class Max_Flow {
 	}
 
 	/**
-	 * Initierar en graf med storleken som användaren matar in.
+	 * Skapar en graf med storleken som användaren matar in. 
+	 * Ser till att det finns en koppling mellan alla bgar 
+	 * från och till source-noden och sink-noden
 	 * 
 	 * @param leftSize
 	 * @param rightSize
 	 */
 	public void createGraph(int leftSize, int rightSize) {
+		this.graph = new int[leftSize][rightSize];
+		for(int i = 0; i < graph.length;i++){
+			for(int j = 0; j < graph.length;j++){
+				
+			}
+		}
+		
 
+	}
+	/**
+	 * Metoden skriver ut en visualisering av en graf
+	 */
+	public void printGrid(int[][] graph)
+	{
+	   for(int i = 0; i < graph.length; i++)
+	   {
+	      for(int j = 0; j < graph[i].length; j++)
+	      {
+	         System.out.printf("%5d ", graph[i][j]);
+	      }
+	      System.out.println();
+	   }
 	}
 
 	/**
@@ -134,7 +158,7 @@ public class Max_Flow {
 	 * @param right
 	 */
 	public void addConnection(int left, int right) {
-
+		
 	}
 
 	/**
@@ -145,6 +169,7 @@ public class Max_Flow {
 	public static void main(String[] args) {
 		int[][] graf = { { 0, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 },
 				{ 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 } };
+		
 
 		// int[][] graf = {
 		// {0,16,13,0,0,0},
@@ -157,5 +182,6 @@ public class Max_Flow {
 
 		Max_Flow run = new Max_Flow();
 		System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graf, 0, 5));
+		run.printGrid(graf);
 	}
 }
