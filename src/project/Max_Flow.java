@@ -1,15 +1,8 @@
 package project;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
-
-/*
- * TODO 1: Initiera en graf med storleken som användaren matar in. Den ska heta createGraph(int leftSize, int rightSize).
- */
-
-/*
- * TODO 2: Se till att det finns en koppling mellan source-noder och sink-noder. Skapa metoden addConnection(int left, int right).
- */
 
 /**
  * Klassen hanterar bipartit matchning. En nod anses vara matchad om den ligger
@@ -26,13 +19,19 @@ import java.util.Scanner;
  */
 public class Max_Flow {
 	// Instansvariabler.
+	static Scanner scanner = new Scanner(System.in);
+	private static int[][] graph;
 	private LinkedList<Integer> queue = new LinkedList<Integer>(); // Kö.
-	// private int[][] graf = new int[6][6];
 	private int[] path = new int[6]; // Väg.
 	private boolean[] visited = new boolean[6]; // Boolean som beskriver om en
 												// nod är besökt eller inte.
-	static Scanner scanner = new Scanner(System.in);
-	private int[][] graph;
+	
+	// private int[] path;
+	// private boolean visited[];
+	// private boolean[][] boolGraph;
+	// int matchLeft[];
+	// int matchRight[];
+	// int m, n;
 
 	/**
 	 * Metod som utgår från principen Bredden-Först.
@@ -118,7 +117,7 @@ public class Max_Flow {
 		}
 		return maxFlow;
 	}
-	
+
 	/**
 	 * Initierar en graf med storleken som användaren matar in.
 	 * 
@@ -127,53 +126,76 @@ public class Max_Flow {
 	 */
 	public void createGraph(int leftSize, int rightSize) {
 		this.graph = new int[leftSize][rightSize];
-		
-		for(int i = 0; i < graph.length/2;i++){
-			for(int j = 0; j < graph[i].length/2;j++){
-				if(i > 0){
+
+		for (int i = 0; i < graph.length / 2; i++) {
+			for (int j = 0; j < graph[i].length / 2; j++) {
+				if (i > 0 || i == graph.length - 1) {
 					graph[i][j] = 1;
-				}else if(i == graph.length -1){
+				} else if (i == graph.length - 1) {
 					graph[i][j] = 1;
-				}else{
-				graph[i][j] = 0;
+				} else {
+					graph[i][j] = 0;
 				}
-				
 			}
 		}
-		
-
-	}
-	
-	public int[][] getGraph(){
-		return this.graph;
 	}
 
 	/**
-	 * Metod som ordnar så att det finns en koppling mellan source-noden och
-	 * sink-noden.
+	 * Returnerar en graf.
+	 * 
+	 * @return graph
+	 */
+	public int[][] getGraph() {
+		return this.graph;
+	}
+
+	// public int maximumMatching() {
+	// Arrays.fill(matchLeft, -1);
+	// Arrays.fill(matchRight, -1);
+	//
+	// int count = 0;
+	// for (int i = 0; i < m; i++) {
+	// Arrays.fill(visited, false);
+	// if (addConnection(i)) count++;
+	// }
+	// return count;
+	// }
+
+	/**
+	 * Metod som ordnar så att det finns en indirekt koppling mellan
+	 * source-noden och sink-noden genom andra noder.
 	 * 
 	 * @param left
 	 * @param right
 	 */
 	public void addConnection(int left, int right) {
-		
+		// public boolean addConnection(int u) {
+		// for (int v = 0; v < n; v++) {
+		// if (!boolGraph[u][v] || visited[v]) continue;
+		// visited[v] = true;
+		// if (matchRight[v] == -1 || addConnection(matchRight[v])) {
+		// matchLeft[u] = v;
+		// System.out.println("matchLeft: " + matchLeft);
+		// matchRight[v] = u;
+		// System.out.println("matchRight: " + matchRight);
+		// return true;
+		// }
+		// }
+		// return false;
+	}
 
-	}
 	/**
-	 * Skriver ut envisuell version om grafen
+	 * Skriver ut en visuell version om grafen.
 	 */
-	public void printGrid(int[][] graph)
-	{
-	   for(int i = 0; i < graph.length; i++)
-	   {
-	      for(int j = 0; j < graph[i].length; j++)
-	      {
-	         System.out.printf("%4d ", graph[i][j]);
-	      }
-	      System.out.println();
-	   }
+	public void printGrid(int[][] graph) {
+		for (int i = 0; i < graph.length; i++) {
+			for (int j = 0; j < graph[i].length; j++) {
+				System.out.printf("%4d ", graph[i][j]);
+			}
+			System.out.println();
+		}
 	}
-	
+
 	/**
 	 * Läser in och returnerar användarens inmatning.
 	 * 
@@ -185,38 +207,36 @@ public class Max_Flow {
 	}
 
 	/**
-	 * Metod för att testköra programmet. Initierar grafen med 1:or och 0:or.
+	 * Metod för att testköra programmet.
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-			Max_Flow run = new Max_Flow();
+		Max_Flow run = new Max_Flow();
 
-			System.out.println("Set the size of the graph...");
-			System.out.println("Left side: ");
-			int leftSize = getInput();
-			System.out.println("Right side: ");
-			int rightSize = getInput();
-			System.out.println("The size of the graph is " + leftSize + " x " + rightSize + ".");
-			
-			run.createGraph(leftSize, rightSize);
-			run.printGrid(run.getGraph());
-			
-			
-		int[][] graf = { { 0, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0, 1 }, { 0, 0, 0, 0, 0, 0 } };
+		System.out.println("Set the size of the graph...");
+		System.out.println("Left side: ");
+		int leftSize = getInput();
+		System.out.println("Right side: ");
+		int rightSize = getInput();
+		System.out.println(
+				"The size of the graph is " + leftSize + " on the left side and " + rightSize + " on the right side.");
 		System.out.println();
-		run.printGrid(graf);
 
-		// int[][] graf = {
-		// {0,16,13,0,0,0},
-		// {0,0,10,12,0,0},
-		// {0,4,0,0,14,0},
-		// {0,0,9,0,0,20},
-		// {0,0,0,7,0,4},
-		// {0,0,0,0,0,0}
-		// };
+		run.createGraph(leftSize, rightSize);
+		run.printGrid(run.getGraph());
 
-		System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graf, 0, 5));
+		// run.maximumMatching();
+		// run.addConnection(0);
+
+		// run.fordFulkersonAlgorithm(graph, s, t);
+
+		// När j (bågarna) är större än noll men mindre än hälften av längden
+		// (delat med två).
+		// När i är lika stor som längden minus 1.
+		// När i är det största elementet och j är den andra halvan...
+
+		// System.out.println("The number of edges in the graph is: " +
+		// run.fordFulkersonAlgorithm(graf, 0, 5));
 	}
 }
