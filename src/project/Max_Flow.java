@@ -141,6 +141,13 @@ public class Max_Flow {
 	public void addConnection(int left, int right) {
 		for(int i = 0; i < graph.length;i++){
 			for(int j = 0; j < graph[i].length;j++){
+				if(i == 0){
+					graph[i][j] = 1;
+				}else if(i == graph.length -1){
+					graph[i][j] = 1;
+				}else{
+				graph[i][j] = 0;
+				}
 				
 			}
 		}
