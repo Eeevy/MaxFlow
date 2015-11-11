@@ -32,6 +32,7 @@ public class Max_Flow {
 	private boolean[] visited = new boolean[6]; // Boolean som beskriver om en
 												// nod är besökt eller inte.
 	static Scanner scanner = new Scanner(System.in);
+	private int[][] graph;
 
 	/**
 	 * Metod som utgår från principen Bredden-Först.
@@ -125,6 +126,8 @@ public class Max_Flow {
 	 * @param rightSize
 	 */
 	public void createGraph(int leftSize, int rightSize) {
+		this.graph = new int[leftSize][rightSize];
+		
 
 	}
 
@@ -136,6 +139,11 @@ public class Max_Flow {
 	 * @param right
 	 */
 	public void addConnection(int left, int right) {
+		for(int i = 0; i < graph.length;i++){
+			for(int j = 0; j < graph[i].length;j++){
+				
+			}
+		}
 
 	}
 	/**
