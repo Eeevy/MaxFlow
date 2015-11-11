@@ -117,7 +117,7 @@ public class Max_Flow {
 		}
 		return maxFlow;
 	}
-
+	
 	/**
 	 * Initierar en graf med storleken som användaren matar in.
 	 * 
@@ -137,6 +137,20 @@ public class Max_Flow {
 	 */
 	public void addConnection(int left, int right) {
 
+	}
+	/**
+	 * Skriver ut envisuell version om grafen
+	 */
+	public void printGrid(int[][] graph)
+	{
+	   for(int i = 0; i < graph.length; i++)
+	   {
+	      for(int j = 0; j < graph[i].length; j++)
+	      {
+	         System.out.printf("%5d ", graph[i][j]);
+	      }
+	      System.out.println();
+	   }
 	}
 	
 	/**
