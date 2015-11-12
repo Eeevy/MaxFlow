@@ -169,6 +169,8 @@ public class Max_Flow {
 	 * @param right
 	 */
 	public void addConnection(int left, int right) {
+		
+		graph[left][right] = 1;
 		// public boolean addConnection(int u) {
 		// for (int v = 0; v < n; v++) {
 		// if (!boolGraph[u][v] || visited[v]) continue;
