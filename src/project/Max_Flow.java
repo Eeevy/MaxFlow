@@ -132,7 +132,7 @@ public class Max_Flow {
 		// sida
 		for (int i = 0; i < graph.length; i++) {
 			for (int j = 0; j < graph[i].length; j++) {
-				if ((i == 0 && j > 0 && j < graph[i].length /2)|| (j == graph[i].length -1 && i >= graph.length/2 && i < graph.length -1)) {
+				if ((i == 0 && j > 0 && j < rightSize/2)|| (j == graph[i].length -1 && i >= leftSize/2 && i < graph.length -1)) {
 					graph[i][j] = 1;
 				}
 				else {
