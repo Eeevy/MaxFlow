@@ -25,7 +25,7 @@ public class Max_Flow {
 	private int[] path = new int[6]; // Väg.
 	private boolean[] visited = new boolean[6]; // Boolean som beskriver om en
 												// nod är besökt eller inte.
-	
+
 	// private int[] path;
 	// private boolean visited[];
 	// private boolean[][] boolGraph;
@@ -107,7 +107,8 @@ public class Max_Flow {
 				graph[v][u] += flowCapacity;
 				if (graph[v][u] > 0) {
 					if (v < sink && u > source) {
-						System.out.print("Koppling mellan nod: " + u + " och " + v);
+						System.out.print("Koppling mellan nod: " + u + " och "
+								+ v);
 						System.out.println();
 					}
 				}
@@ -127,11 +128,11 @@ public class Max_Flow {
 	public void createGraph(int leftSize, int rightSize) {
 		this.graph = new int[leftSize][rightSize];
 
-		for (int i = 0; i < graph.length / 2; i++) {
-			for (int j = 0; j < graph[i].length / 2; j++) {
-				if (i > 0 || i == graph.length - 1) {
-					graph[i][j] = 1;
-				} else if (i == graph.length - 1) {
+		// Sätter ut koppling mellan source noden och övrigaa noder på vänster
+		// sida
+		for (int i = 0; i < graph.length; i++) {
+			for (int j = 0; j < graph[i].length; j++) {
+				if (i == 0 && j > 0 || i == graph.length - 1 && j < graph.length /2) {
 					graph[i][j] = 1;
 				} else {
 					graph[i][j] = 0;
@@ -139,6 +140,11 @@ public class Max_Flow {
 			}
 		}
 	}
+
+	// När j (bågarna) är större än noll men mindre än hälften av längden
+	// (delat med två).
+	// När i är lika stor som längden minus 1.
+	// När i är det största elementet och j är den andra halvan...
 
 	/**
 	 * Returnerar en graf.
@@ -169,7 +175,7 @@ public class Max_Flow {
 	 * @param right
 	 */
 	public void addConnection(int left, int right) {
-		
+
 		graph[left][right] = 1;
 		// public boolean addConnection(int u) {
 		// for (int v = 0; v < n; v++) {
@@ -221,22 +227,25 @@ public class Max_Flow {
 		int leftSize = getInput();
 		System.out.println("Right side: ");
 		int rightSize = getInput();
-		System.out.println(
-				"The size of the graph is " + leftSize + " on the left side and " + rightSize + " on the right side.");
+		System.out.println("The size of the graph is " + leftSize
+				+ " on the left side and " + rightSize + " on the right side.");
 		System.out.println();
 
 		run.createGraph(leftSize, rightSize);
 		run.printGrid(run.getGraph());
 
 		// run.maximumMatching();
-		// run.addConnection(0);
+
+		// TO DO: En while loop som ber användaren att mata in connections.
+		// Bortsett från kopplingar som går från sink-sink och source-source
+
+		// run.addConnection(0,2);
+		//
+		//
+		// System.out.println();
+		// run.printGrid(run.getGraph());
 
 		// run.fordFulkersonAlgorithm(graph, s, t);
-
-		// När j (bågarna) är större än noll men mindre än hälften av längden
-		// (delat med två).
-		// När i är lika stor som längden minus 1.
-		// När i är det största elementet och j är den andra halvan...
 
 		// System.out.println("The number of edges in the graph is: " +
 		// run.fordFulkersonAlgorithm(graf, 0, 5));
