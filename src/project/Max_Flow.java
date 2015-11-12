@@ -22,8 +22,8 @@ public class Max_Flow {
 	static Scanner scanner = new Scanner(System.in);
 	private static int[][] graph;
 	private LinkedList<Integer> queue = new LinkedList<Integer>(); // Kö.
-	private int[] path = new int[6]; // Väg.
-	private boolean[] visited = new boolean[6]; // Boolean som beskriver om en
+	private int[] path; // Väg.
+	private boolean[] visited; // Boolean som beskriver om en
 												// nod är besökt eller inte.
 
 	// private int[] path;
@@ -126,6 +126,12 @@ public class Max_Flow {
 	 * @param rightSize
 	 */
 	public void createGraph(int leftSize, int rightSize) {
+		int arraySize;
+		if(leftSize > rightSize){
+			arraySize = leftSize;
+		}else arraySize = rightSize;
+		this.path = new int[arraySize];
+		this.visited = new boolean[arraySize];
 		this.graph = new int[leftSize][rightSize];
 
 		// Sätter ut koppling mellan source noden och övrigaa noder på vänster
@@ -142,10 +148,6 @@ public class Max_Flow {
 		}
 	}
 
-	// När j (bågarna) är större än noll men mindre än hälften av längden
-	// (delat med två).
-	// När i är lika stor som längden minus 1.
-	// När i är det största elementet och j är den andra halvan...
 
 	/**
 	 * Returnerar en graf.
@@ -156,17 +158,7 @@ public class Max_Flow {
 		return this.graph;
 	}
 
-	// public int maximumMatching() {
-	// Arrays.fill(matchLeft, -1);
-	// Arrays.fill(matchRight, -1);
-	//
-	// int count = 0;
-	// for (int i = 0; i < m; i++) {
-	// Arrays.fill(visited, false);
-	// if (addConnection(i)) count++;
-	// }
-	// return count;
-	// }
+
 
 	/**
 	 * Metod som ordnar så att det finns en indirekt koppling mellan
@@ -178,19 +170,7 @@ public class Max_Flow {
 	public void addConnection(int left, int right) {
 
 		graph[left][right] = 1;
-		// public boolean addConnection(int u) {
-		// for (int v = 0; v < n; v++) {
-		// if (!boolGraph[u][v] || visited[v]) continue;
-		// visited[v] = true;
-		// if (matchRight[v] == -1 || addConnection(matchRight[v])) {
-		// matchLeft[u] = v;
-		// System.out.println("matchLeft: " + matchLeft);
-		// matchRight[v] = u;
-		// System.out.println("matchRight: " + matchRight);
-		// return true;
-		// }
-		// }
-		// return false;
+		
 	}
 
 	/**
@@ -232,6 +212,10 @@ public class Max_Flow {
 				+ " on the left side and " + rightSize + " on the right side.");
 		System.out.println();
 		
+		run.createGraph(leftSize, rightSize);
+		run.printGrid(run.getGraph());
+
+
 		System.out.print(
 				"Now it's time to add some connections between the edges. How many connections would you like to add? ");
 		int nmbOfConnections = getInput();
@@ -244,10 +228,11 @@ public class Max_Flow {
 			System.out.print("Edge 2: ");
 			int connectionRight = getInput();
 			System.out.println();
-//			run.addConnection(connectionLeft, connectionRight);
+			System.out.println("Du matade in"  + connectionLeft + " "+ connectionRight);
+			run.addConnection(connectionLeft, connectionRight);
 		}
 
-		run.createGraph(leftSize, rightSize);
+		System.out.println();
 		run.printGrid(run.getGraph());
 
 		// run.maximumMatching();
@@ -261,9 +246,7 @@ public class Max_Flow {
 		// System.out.println();
 		// run.printGrid(run.getGraph());
 
-		// run.fordFulkersonAlgorithm(graph, s, t);
 
-		// System.out.println("The number of edges in the graph is: " +
-		// run.fordFulkersonAlgorithm(graf, 0, 5));
+		 System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graph, 0, graph.length -1));
 	}
 }
