@@ -224,13 +224,28 @@ public class Max_Flow {
 		Max_Flow run = new Max_Flow();
 
 		System.out.println("Set the size of the graph...");
-		System.out.println("Left side: ");
+		System.out.print("Left side: ");
 		int leftSize = getInput();
-		System.out.println("Right side: ");
+		System.out.print("Right side: ");
 		int rightSize = getInput();
 		System.out.println("The size of the graph is " + leftSize
 				+ " on the left side and " + rightSize + " on the right side.");
 		System.out.println();
+		
+		System.out.print(
+				"Now it's time to add some connections between the edges. How many connections would you like to add? ");
+		int nmbOfConnections = getInput();
+		System.out.println("Alright! You've chosen to add " + nmbOfConnections + " connections. Let's go!");
+
+		for (int i = 1; i <= nmbOfConnections; i++) {
+			System.out.println("Connection #" + i + ":");
+			System.out.print("Edge 1: ");
+			int connectionLeft = getInput();
+			System.out.print("Edge 2: ");
+			int connectionRight = getInput();
+			System.out.println();
+//			run.addConnection(connectionLeft, connectionRight);
+		}
 
 		run.createGraph(leftSize, rightSize);
 		run.printGrid(run.getGraph());
