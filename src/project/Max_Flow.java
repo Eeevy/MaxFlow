@@ -145,7 +145,7 @@ public class Max_Flow {
 				//(Connection to source) skall sätta en etta om i>0 && i<graph.length-1 (alla förutom första och sista skall ha connection till source)
 				//(Connection to sink) skall sätta en etta om j>0 j<graph.length-1 (alla förutom första och siste skall ha connection till sink)
 				if ((i == 0 && j > 0 && j <= leftSize) || 
-						(j == graph.length -1 && i >= (graph.length - (leftSize+1)) && i < graph.length-1)) {
+						(j == graph.length -1 && i >= (graph.length - (rightSize+1)) && i < graph.length-1)) {
 					graph[i][j] = 1;
 				}
 				else {
