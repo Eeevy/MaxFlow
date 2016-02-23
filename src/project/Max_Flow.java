@@ -49,6 +49,7 @@ public class Max_Flow {
 		boolean pathFound = false;
 
 		for (int i = 0; i < graph.length; i++) {
+			System.out.println("i i bfs: " + i);
 			visited[i] = false;
 		}
 
@@ -126,14 +127,18 @@ public class Max_Flow {
 	 * @param rightSize
 	 */
 	public void createGraph(int leftSize, int rightSize) {
-		int arraySize;
-		if(leftSize > rightSize){
-			arraySize = leftSize;
-		}else arraySize = rightSize;
-		this.path = new int[arraySize];
-		this.visited = new boolean[arraySize];
+//		int arraySize;
+//		if(leftSize > rightSize){
+//			arraySize = leftSize;
+//		}else arraySize = rightSize;
 		int leftNodes = leftSize+rightSize+2;
 		int rightNodes = leftSize+rightSize+2;
+		int largeArraySize = leftNodes+rightNodes;
+//		this.path = new int[arraySize];
+//		this.visited = new boolean[arraySize];
+		this.path = new int[largeArraySize];
+		this.visited = new boolean[largeArraySize];
+		
 		this.graph = new int[leftNodes][rightNodes];//Lägger till source på vänstersidan och sink på högersidan
 		System.out.println("GRAPH LENGTH:" +graph.length );
 
@@ -254,6 +259,6 @@ public class Max_Flow {
 		// run.printGrid(run.getGraph());
 
 
-		 System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graph, 0, graph.length -1));
+		 System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graph, 0, graph.length-1));
 	}
 }
