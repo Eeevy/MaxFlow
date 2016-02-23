@@ -132,13 +132,20 @@ public class Max_Flow {
 		}else arraySize = rightSize;
 		this.path = new int[arraySize];
 		this.visited = new boolean[arraySize];
-		this.graph = new int[leftSize][rightSize];
+		int leftNodes = leftSize+rightSize+2;
+		int rightNodes = leftSize+rightSize+2;
+		this.graph = new int[leftNodes][rightNodes];//Lägger till source på vänstersidan och sink på högersidan
+		System.out.println("GRAPH LENGTH:" +graph.length );
+
 
 		// Sätter ut koppling mellan source noden och övrigaa noder på vänster
 		// sida
 		for (int i = 0; i < graph.length; i++) {
 			for (int j = 0; j < graph[i].length; j++) {
-				if ((i == 0 && j > 0 && j < rightSize/2)|| (j == graph[i].length -1 && i >= leftSize/2 && i < graph.length -1)) {
+				//(Connection to source) skall sätta en etta om i>0 && i<graph.length-1 (alla förutom första och sista skall ha connection till source)
+				//(Connection to sink) skall sätta en etta om j>0 j<graph.length-1 (alla förutom första och siste skall ha connection till sink)
+				if ((i == 0 && j > 0 && j <= leftSize) || 
+						(j == graph.length -1 && i >= (graph.length - (leftSize+1)) && i < graph.length-1)) {
 					graph[i][j] = 1;
 				}
 				else {
