@@ -4,15 +4,19 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 /**
- * Klassen hanterar bipartit matchning. En nod anses vara matchad om den ligger
- * i en båge. I varje graf finns en graf finns en source-nod och en sink-nod och
- * dessa utgör en del av flödesschemat. Det finns olika vägar mellan en
- * source-nod och sink-nod, genom andra noder. Vid exekvering av programmet
- * skrivs koppling mellan de mellanliggande noderna ut. Det är underförstått att
- * vägen alltid börjar från en source-nod och avslutas vid en sink-nod. Därav
- * sker ingen utskrift gällande de kopplingarna. Applikationen beräknar även det
- * maximala flödet för den aktuella grafen.
+ * Klassen representerar en bipartit matchning. I varje graf finns en source-nod
+ * och en sink-nod, vilka utgör en del av flödesschemat. Inledningsvis ombes
+ * användaren att mata in antal noder på vänster respektive höger sida av
+ * grafen. Vidare uppmanas denne även att mata in kopplingar mellan noderna på
+ * respektive sida av grafen. Programmet ser till att det alltid finns en
+ * koppling mellan source och grafens vänstra noder samt mellan sink och grafens
+ * högra noder. Vid exekvering av programmet appliceras dessa kopplingar och med
+ * hjälp av en Ford-Fulkerson-algoritm samt Bredden-Först-sökning undersöks
+ * antalet distinkta vägar i grafen. Programmet skriver slutligen ut detta antal
+ * samt de kopplingar som använts.
  * 
  * @authors Emma Shakespeare och Evelyn Gustavsson
  *
@@ -23,18 +27,12 @@ public class Max_Flow {
 	private static int[][] graph;
 	private LinkedList<Integer> queue = new LinkedList<Integer>(); // Kö.
 	private int[] path; // Väg.
-	private boolean[] visited; // Boolean som beskriver om en
-												// nod är besökt eller inte.
-
-	// private int[] path;
-	// private boolean visited[];
-	// private boolean[][] boolGraph;
-	// int matchLeft[];
-	// int matchRight[];
-	// int m, n;
+	// Boolean som beskriver om en nod är besökt eller inte.
+	private boolean[] visited;
 
 	/**
-	 * Metod som utgår från principen Bredden-Först.
+	 * Metod som letar efter en unik (obesökt) väg i grafen, genom en
+	 * Bredden-Först-sökning.
 	 * 
 	 * @param graph
 	 *            - en tvådimensionell heltalsarray som en graf
@@ -49,7 +47,6 @@ public class Max_Flow {
 		boolean pathFound = false;
 
 		for (int i = 0; i < graph.length; i++) {
-			System.out.println("i i bfs: " + i);
 			visited[i] = false;
 		}
 
@@ -76,7 +73,7 @@ public class Max_Flow {
 	}
 
 	/**
-	 * Metoden använder Ford Fulkersons algoritm för att hitta det maximala
+	 * Metoden använder Ford Fulkersons-algoritm för att hitta det maximala
 	 * flödet i nätverket.
 	 * 
 	 * @param graph
@@ -108,8 +105,7 @@ public class Max_Flow {
 				graph[v][u] += flowCapacity;
 				if (graph[v][u] > 0) {
 					if (v < sink && u > source) {
-						System.out.print("Koppling mellan nod: " + u + " och "
-								+ v);
+						System.out.print("Koppling mellan nod: " + u + " och " + v);
 						System.out.println();
 					}
 				}
@@ -124,42 +120,33 @@ public class Max_Flow {
 	 * Initierar en graf med storleken som användaren matar in.
 	 * 
 	 * @param leftSize
+	 *            - Antal noder på vänster sida.
 	 * @param rightSize
+	 *            - Antal noder på höger sida.
 	 */
 	public void createGraph(int leftSize, int rightSize) {
-//		int arraySize;
-//		if(leftSize > rightSize){
-//			arraySize = leftSize;
-//		}else arraySize = rightSize;
-		int leftNodes = leftSize+rightSize+2;
-		int rightNodes = leftSize+rightSize+2;
-		int largeArraySize = leftNodes+rightNodes;
-//		this.path = new int[arraySize];
-//		this.visited = new boolean[arraySize];
+		// Lägger till source på vänstersidan och sink på högersidan.
+		int leftNodes = leftSize + rightSize + 2;
+		int rightNodes = leftSize + rightSize + 2;
+		int largeArraySize = leftNodes + rightNodes;
 		this.path = new int[largeArraySize];
 		this.visited = new boolean[largeArraySize];
-		
-		this.graph = new int[leftNodes][rightNodes];//Lägger till source på vänstersidan och sink på högersidan
-		System.out.println("GRAPH LENGTH:" +graph.length );
+		this.graph = new int[leftNodes][rightNodes];
 
-
-		// Sätter ut koppling mellan source noden och övrigaa noder på vänster
+		// Sätter ut koppling mellan source noden och övriga noder på vänster
 		// sida
 		for (int i = 0; i < graph.length; i++) {
 			for (int j = 0; j < graph[i].length; j++) {
-				//(Connection to source) skall sätta en etta om i>0 && i<graph.length-1 (alla förutom första och sista skall ha connection till source)
-				//(Connection to sink) skall sätta en etta om j>0 j<graph.length-1 (alla förutom första och siste skall ha connection till sink)
-				if ((i == 0 && j > 0 && j <= leftSize) || 
-						(j == graph.length -1 && i >= (graph.length - (rightSize+1)) && i < graph.length-1)) {
+
+				if ((i == 0 && j > 0 && j <= leftSize)
+						|| (j == graph.length - 1 && i >= (graph.length - (rightSize + 1)) && i < graph.length - 1)) {
 					graph[i][j] = 1;
-				}
-				else {
+				} else {
 					graph[i][j] = 0;
 				}
 			}
 		}
 	}
-
 
 	/**
 	 * Returnerar en graf.
@@ -170,19 +157,18 @@ public class Max_Flow {
 		return this.graph;
 	}
 
-
-
 	/**
 	 * Metod som ordnar så att det finns en indirekt koppling mellan
-	 * source-noden och sink-noden genom andra noder.
+	 * source-noden och grafens vänstra noder samt mellan sink-noden och grafens
+	 * högra noder.
 	 * 
-	 * @param left
+	 * @param left - Representerar
+	 *            koppling på grafens vänstra sida.
 	 * @param right
+	 *            - Representerar koppling på grafens högra sida.
 	 */
 	public void addConnection(int left, int right) {
-
 		graph[left][right] = 1;
-		
 	}
 
 	/**
@@ -208,7 +194,7 @@ public class Max_Flow {
 	}
 
 	/**
-	 * Metod för att testköra programmet.
+	 * Metod för att exekvera programmet.
 	 * 
 	 * @param args
 	 */
@@ -220,45 +206,34 @@ public class Max_Flow {
 		int leftSize = getInput();
 		System.out.print("Right side: ");
 		int rightSize = getInput();
-		System.out.println("The size of the graph is " + leftSize
-				+ " on the left side and " + rightSize + " on the right side.");
+		System.out.println(
+				"The size of the graph is " + leftSize + " on the left side and " + rightSize + " on the right side.");
 		System.out.println();
-		
+
 		run.createGraph(leftSize, rightSize);
 		run.printGrid(run.getGraph());
 
-
 		System.out.print(
-				"Now it's time to add some connections between the edges. How many connections would you like to add? ");
+				"\nNow it's time to add some connections from the nodes on the left side to the nodes on the right side. \nHow many connections would you like to add? ");
+
 		int nmbOfConnections = getInput();
 		System.out.println("Alright! You've chosen to add " + nmbOfConnections + " connections. Let's go!");
 
 		for (int i = 1; i <= nmbOfConnections; i++) {
 			System.out.println("Connection #" + i + ":");
-			System.out.print("Edge 1: ");
+			System.out.print("Start node (0-" + graph.length+"): ");
 			int connectionLeft = getInput();
-			System.out.print("Edge 2: ");
+			System.out.print("End node (0-" + graph.length+"): ");
 			int connectionRight = getInput();
 			System.out.println();
-			System.out.println("Du matade in"  + connectionLeft + " "+ connectionRight);
+			System.out.println("Your input: " + connectionLeft + " " + connectionRight);
 			run.addConnection(connectionLeft, connectionRight);
 		}
 
 		System.out.println();
 		run.printGrid(run.getGraph());
 
-		// run.maximumMatching();
-
-		// TO DO: En while loop som ber användaren att mata in connections.
-		// Bortsett från kopplingar som går från sink-sink och source-source
-
-		// run.addConnection(0,2);
-		//
-		//
-		// System.out.println();
-		// run.printGrid(run.getGraph());
-
-
-		 System.out.println("The number of edges in the graph is: " + run.fordFulkersonAlgorithm(graph, 0, graph.length-1));
+		System.out.println("The number of edges in the bipartite matching in current graph: "
+				+ run.fordFulkersonAlgorithm(graph, 0, graph.length - 1));
 	}
 }
