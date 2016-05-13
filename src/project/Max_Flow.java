@@ -138,9 +138,11 @@ public class Max_Flow {
 		for (int i = 0; i < graph.length; i++) {
 			for (int j = 0; j < graph[i].length; j++) {
 
-				if ((i == 0 && j > 0 && j <= leftSize)
+				if ((i == 0 && j > 0 && j <= leftSize )
 						|| (j == graph.length - 1 && i >= (graph.length - (rightSize + 1)) && i < graph.length - 1)) {
 					graph[i][j] = 1;
+//	                graph[i][graph.length - 1] = 1;
+
 				} else {
 					graph[i][j] = 0;
 				}
@@ -185,7 +187,7 @@ public class Max_Flow {
 
 	/**
 	 * Läser in och returnerar användarens inmatning.
-	 * 
+	 *  
 	 * @return input
 	 */
 	private static int getInput() {
@@ -211,6 +213,7 @@ public class Max_Flow {
 		System.out.println();
 
 		run.createGraph(leftSize, rightSize);
+		System.out.println("Initialized graph with connections between source and sink");
 		run.printGrid(run.getGraph());
 
 		System.out.print(
@@ -221,19 +224,21 @@ public class Max_Flow {
 
 		for (int i = 1; i <= nmbOfConnections; i++) {
 			System.out.println("Connection #" + i + ":");
-			System.out.print("Start node (0-" + graph.length+"): ");
+			System.out.print("Start node (1-" + leftSize +"): ");
 			int connectionLeft = getInput();
-			System.out.print("End node (0-" + graph.length+"): ");
+			System.out.print("End node (" + (leftSize+1) +"-"+ (leftSize +rightSize)+"): ");
 			int connectionRight = getInput();
 			System.out.println();
 			System.out.println("Your input: " + connectionLeft + " " + connectionRight);
 			run.addConnection(connectionLeft, connectionRight);
 		}
 
-		System.out.println();
+		System.out.println("Graph visualized with connections applied");
 		run.printGrid(run.getGraph());
 
-		System.out.println("The number of edges in the bipartite matching in current graph: "
+		System.out.println("The max flow in current graph: "
 				+ run.fordFulkersonAlgorithm(graph, 0, graph.length - 1));
+		System.out.println("New Graph");
+		run.printGrid(run.getGraph());
 	}
 }
